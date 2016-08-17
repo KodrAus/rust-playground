@@ -21,7 +21,7 @@ class Playground extends React.Component {
     const { showConfig, focus } = this.props;
 
     const config = showConfig ? <ConfigurationModal /> : null;
-    const outputFocused = focus ? 'playground-output-focused' : '';
+    const outputFocused = focus !== undefined && focus !== 'gist' ? 'playground-output-focused' : '';
 
     return (
       <div>
