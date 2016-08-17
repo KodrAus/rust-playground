@@ -24,14 +24,31 @@ function oneRadio(name, currentValue, possibleValue, change, labelText) {
 }
 
 class Header extends PureComponent {
+  constructor() {
+    super();
+
+    this.state = {
+      showMenu: false
+    };
+
+    this.setState = this.setState.bind(this)
+  }
+
+  toggleMenu() {
+    var showMenu = this.state.showMenu;
+    this.setState({showMenu: !showMenu});
+  }
+
   render() {
     const {
       execute, compileToAssembly, compileToLLVM,
       format, clippy, gistSave,
       channel, changeChannel, mode, changeMode,
       tests,
-      toggleConfiguration,
+      toggleConfiguration
     } = this.props;
+
+    var showMenu = this.state.showMenu;
 
     const oneChannel = (value, labelText) =>
             oneRadio("channel", channel, value, changeChannel, labelText);
@@ -45,42 +62,46 @@ class Header extends PureComponent {
         <div className="header-compilation header-set">
           <button className="header-btn header-btn-primary"
                   onClick={ execute }>{ executionLabel }</button>
-          <button className="header-btn"
-                  onClick={ compileToAssembly }>ASM</button>
-          <button className="header-btn"
-                  onClick={ compileToLLVM }>LLVM IR</button>
+          <button className="header-btn" onClick={() => this.toggleMenu()}>tools</button>
         </div>
 
-        <div className="header-tools header-set">
-          <legend className="header-title">Tools</legend>
-          <button className="header-btn"
-                  onClick={ format }>Format</button>
-          <button className="header-btn"
-                  onClick={ clippy }>Clippy</button>
-        </div>
+        { 
+          showMenu ?
 
-        <div className="header-sharing header-set">
-          <button className="header-btn"
-                  onClick={ gistSave }>Gist</button>
-        </div>
+            <div className="header header-menu">
+              <div className="header-tools header-set">
+                <legend className="header-title">Tools</legend>
+                <button className="header-btn"
+                        onClick={ compileToAssembly }>ASM</button>
+                <button className="header-btn"
+                        onClick={ compileToLLVM }>LLVM IR</button>
+                <button className="header-btn"
+                        onClick={ format }>Format</button>
+                <button className="header-btn"
+                        onClick={ clippy }>Clippy</button>
+              </div>
 
-        <div className="header-mode header-set">
-          <legend className="header-title">Mode</legend>
-          { oneMode("debug", "Debug") }
-          { oneMode("release", "Release") }
-        </div>
+              <div className="header-mode header-set">
+                <legend className="header-title">Mode</legend>
+                { oneMode("debug", "Debug") }
+                { oneMode("release", "Release") }
+              </div>
 
-        <div className="header-channel header-set">
-          <legend className="header-title">Channel</legend>
-          { oneChannel("stable", "Stable") }
-          { oneChannel("beta", "Beta") }
-          { oneChannel("nightly", "Nightly") }
-        </div>
+              <div className="header-channel header-set">
+                <legend className="header-title">Channel</legend>
+                { oneChannel("stable", "Stable") }
+                { oneChannel("beta", "Beta") }
+                { oneChannel("nightly", "Nightly") }
+              </div>
 
-        <div className="header-set">
-          <button className="header-btn"
-                  onClick={toggleConfiguration}>Config</button>
-        </div>
+              <div className="header-set">
+                <button className="header-btn"
+                        onClick={toggleConfiguration}>Config</button>
+              </div>
+            </div>
+
+          : null
+        }
       </div>
     );
   }
