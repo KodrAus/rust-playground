@@ -206,10 +206,6 @@ class Output extends PureComponent {
                label="LLVM IR"
                onClick={this.focusLlvmIr}
                tabProps={llvmIr} />
-          <Tab kind="gist" focus={focus}
-               label="Gist"
-               onClick={this.focusGist}
-               tabProps={gist} />
           { close }
         </div>
         { body }

@@ -21,7 +21,7 @@ class Playground extends React.Component {
     const { showConfig, focus } = this.props;
 
     const config = showConfig ? <ConfigurationModal /> : null;
-    const outputFocused = focus !== undefined && focus !== 'gist' ? 'playground-output-focused' : '';
+    const outputFocused = focus !== null && focus !== 'gist' ? true : false;
 
     return (
       <div>
@@ -33,9 +33,15 @@ class Playground extends React.Component {
           <div className="playground-editor">
             <Editor />
           </div>
-          <div className={`playground-output ${outputFocused}`}>
-            <Output />
-          </div>
+          {
+            outputFocused ?
+            
+              <div className={`playground-output playground-output-focused`}>
+                <Output />
+              </div> 
+
+            : null  
+          }
         </div>
       </div>
     );
