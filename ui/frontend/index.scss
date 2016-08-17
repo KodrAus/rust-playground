@@ -38,7 +38,11 @@ button:focus {
     &-output {
         &-focused {
             flex: 1 1 0%;
-            position: relative;
+            position: absolute;
+            width: 98%;
+            height: 100%;
+            top: 0;
+            z-index: 100;
         }
     }
 }
@@ -306,6 +310,7 @@ $PHI: 2.61803398875;
 }
 
 .loader {
+    z-index: 1000;
     &-dot {
         opacity: 0;
         animation: loader-fade 1s;
